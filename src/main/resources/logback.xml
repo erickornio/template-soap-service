@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender>
+        <encoder name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <pattern>%date{ISO8601} [%thread] %-5level %logger{36} - #msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender>
+        <encoder name="fileApp" class="ch.qos.logback.core.FileAppender">
+            <file>../logs/app.log</file>
+            <append>true</append>
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>INFO</level>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>app.log_%d{yyyy-MM-dd}</fileNamePattern>
+            </rollingPolicy>
+            <pattern>%date{ISO8601} [%thread] %-5level %logger{36} - #msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender>
+        <encoder name="fileErrors" class="ch.qos.logback.core.FileAppender">
+            <file>../logs/app-error.log</file>
+            <append>true</append>
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>WARN</level>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>app-error.log_%d{yyyy-MM-dd}</fileNamePattern>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <pattern>%date{ISO8601} [%thread] %-5level %logger{36} - #msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="ca.cognitus.ws.app" level="DEBUG"/>
+
+    <root level="DEBUG">
+        <appender-ref ref="fileApp"/>
+        <appender-ref ref="fileErrors"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
